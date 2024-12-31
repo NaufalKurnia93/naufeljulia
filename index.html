@@ -467,349 +467,186 @@
 
 
 
-  <script>
+ <script>
+  const sound = new Howl({
+    src: ['COK.mp3'],
+    volume: 0.5,
+    loop: false // Menonaktifkan pengulangan otomatis
+  });
 
-    const sound = new Howl({
+  document.body.addEventListener('click', () => {
+    if (Howler.ctx.state === 'suspended') {
+      Howler.ctx.resume();
+    }
+  }, { once: true });
 
-  src: ['suara-kembang-api.mp3'],
-
-  volume: 0.5
-
-});
-
-
-
-document.body.addEventListener('click', () => {
-
-  if (Howler.ctx.state === 'suspended') {
-
-    Howler.ctx.resume();
-
+  function flipNumber(element, newNumber) {
+    element.innerHTML = `<span class="flip-content">${newNumber}</span>`;
   }
 
-}, { once: true });
+  function updateYear() {
+    const numbers = document.querySelectorAll('.number');
 
+    setTimeout(() => flipNumber(numbers[3], '5'), 0);
 
+    setTimeout(() => {
+      const yearContainer = document.getElementById('yearContainer');
+      yearContainer.classList.add('glow');
+    }, 600);
+  }
 
-function flipNumber(element, newNumber) {
+  setTimeout(updateYear, 3000);
 
-  element.innerHTML = `<span class="flip-content">${newNumber}</span>`;
-
-}
-
-
-
-function updateYear() {
-
-  const numbers = document.querySelectorAll('.number');
-
-
-
-  setTimeout(() => flipNumber(numbers[3], '5'), 0);
-
-
-
-  setTimeout(() => {
-
-    const yearContainer = document.getElementById('yearContainer');
-
-    yearContainer.classList.add('glow');
-
-  }, 600);
-
-}
-
-
-
-setTimeout(updateYear, 3000);
-
-
-
-const canvas = document.getElementById('kembangApi');
-
-const ctx = canvas.getContext('2d');
-
-
-
-canvas.width = window.innerWidth;
-
-canvas.height = window.innerHeight;
-
-
-
-window.addEventListener('resize', () => {
+  const canvas = document.getElementById('kembangApi');
+  const ctx = canvas.getContext('2d');
 
   canvas.width = window.innerWidth;
-
   canvas.height = window.innerHeight;
 
-});
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
 
+  let isSoundPlayed = false; // Flag untuk memastikan suara hanya diputar sekali
 
+  class Firework {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height;
+      this.sx = Math.random() * 3 - 1.5;
+      this.sy = Math.random() * -12 - 8;
+      this.size = 3;
+      this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      this.particles = [];
+      this.timer = 0;
+      this.explosion = false;
+    }
 
-class Firework {
+    update() {
+      if (!this.explosion) {
+        this.x += this.sx;
+        this.y += this.sy;
+        this.sy += 0.2;
 
-  constructor() {
-
-    this.x = Math.random() * canvas.width;
-
-    this.y = canvas.height;
-
-    this.sx = Math.random() * 3 - 1.5;
-
-    this.sy = Math.random() * -12 - 8;
-
-    this.size = 3;
-
-    this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-
-    this.particles = [];
-
-    this.timer = 0;
-
-    this.explosion = false;
-
-  }
-
-
-
-  update() {
-
-    if (!this.explosion) {
-
-      this.x += this.sx;
-
-      this.y += this.sy;
-
-      this.sy += 0.2;
-
-
-
-      if (this.sy >= -3) {
-
-        this.explode();
-
+        if (this.sy >= -3) {
+          this.explode();
+        }
       }
 
+      if (this.explosion) {
+        for (let i = 0; i < this.particles.length; i++) {
+          this.particles[i].x += this.particles[i].sx;
+          this.particles[i].y += this.particles[i].sy;
+          this.particles[i].sy += 0.1;
+          this.particles[i].alpha -= 0.02;
+        }
+        this.particles = this.particles.filter(p => p.alpha > 0);
+      }
     }
 
+    explode() {
+      this.explosion = true;
 
-
-    if (this.explosion) {
-
-      for (let i = 0; i < this.particles.length; i++) {
-
-        this.particles[i].x += this.particles[i].sx;
-
-        this.particles[i].y += this.particles[i].sy;
-
-        this.particles[i].sy += 0.1;
-
-        this.particles[i].alpha -= 0.02;
-
+      // Pastikan suara hanya diputar sekali
+      if (!isSoundPlayed) {
+        sound.play();
+        isSoundPlayed = true; // Mengatur flag agar suara tidak diputar ulang
       }
 
-      this.particles = this.particles.filter(p => p.alpha > 0);
-
+      for (let i = 0; i < 50; i++) {
+        const angle = (Math.PI * 2 / 50) * i;
+        const speed = Math.random() * 5 + 3;
+        this.particles.push({
+          x: this.x,
+          y: this.y,
+          sx: Math.cos(angle) * speed,
+          sy: Math.sin(angle) * speed,
+          alpha: 1,
+          color: this.color
+        });
+      }
     }
 
-  }
-
-
-
-  explode() {
-
-    this.explosion = true;
-
-    sound.play();
-
-
-
-    for (let i = 0; i < 50; i++) {
-
-      const angle = (Math.PI * 2 / 50) * i;
-
-      const speed = Math.random() * 5 + 3;
-
-      this.particles.push({
-
-        x: this.x,
-
-        y: this.y,
-
-        sx: Math.cos(angle) * speed,
-
-        sy: Math.sin(angle) * speed,
-
-        alpha: 1,
-
-        color: this.color
-
-      });
-
-    }
-
-  }
-
-
-
-  draw() {
-
-    if (!this.explosion) {
-
-      ctx.beginPath();
-
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-
-      ctx.fillStyle = this.color;
-
-      ctx.fill();
-
-    }
-
-
-
-    if (this.explosion) {
-
-      for (const particle of this.particles) {
-
+    draw() {
+      if (!this.explosion) {
         ctx.beginPath();
-
-        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
-
-        ctx.fillStyle = `rgba(${hexToRgb(particle.color)}, ${particle.alpha})`;
-
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
         ctx.fill();
-
       }
 
+      if (this.explosion) {
+        for (const particle of this.particles) {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${hexToRgb(particle.color)}, ${particle.alpha})`;
+          ctx.fill();
+        }
+      }
+    }
+  }
+
+  function hexToRgb(hex) {
+    const result = /^hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)$/.exec(hex);
+    if (result) {
+      const h = result[1] / 360;
+      const s = result[2] / 100;
+      const l = result[3] / 100;
+
+      const r = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const g = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const b = l < 0.5 ? l * (1 + s) : l + s - l * s;
+
+      return `${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}`;
+    }
+    return null;
+  }
+
+  const fireworks = [];
+
+  function animate() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Menambahkan kembang api baru secara acak
+    if (Math.random() < 0.05) {
+      fireworks.push(new Firework());
     }
 
-  }
-
-}
-
-
-
-function hexToRgb(hex) {
-
-  const result = /^hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)$/.exec(hex);
-
-  if (result) {
-
-    const h = result[1] / 360;
-
-    const s = result[2] / 100;
-
-    const l = result[3] / 100;
-
-
-
-    const r = l < 0.5 ? l * (1 + s) : l + s - l * s;
-
-    const g = l < 0.5 ? l * (1 + s) : l + s - l * s;
-
-    const b = l < 0.5 ? l * (1 + s) : l + s - l * s;
-
-
-
-    return `${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}`;
-
-  }
-
-  return null;
-
-}
-
-
-
-const fireworks = [];
-
-
-
-function animate() {
-
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-
-
-  // Menambahkan kembang api baru secara acak
-
-  if (Math.random() < 0.05) {
-
-    fireworks.push(new Firework());
-
-  }
-
-
-
-  // Memperbarui dan menggambar setiap kembang api
-
-  for (let i = fireworks.length - 1; i >= 0; i--) {
-
-    fireworks[i].update();
-
-    fireworks[i].draw();
-
-    // Menghapus kembang api yang sudah tidak memiliki partikel lagi
-
-    if (fireworks[i].particles.length === 0 && fireworks[i].explosion) {
-
-      fireworks.splice(i, 1);
-
+    // Memperbarui dan menggambar setiap kembang api
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+      fireworks[i].update();
+      fireworks[i].draw();
+      // Menghapus kembang api yang sudah tidak memiliki partikel lagi
+      if (fireworks[i].particles.length === 0 && fireworks[i].explosion) {
+        fireworks.splice(i, 1);
+      }
     }
 
+    // Memanggil animate secara berulang
+    requestAnimationFrame(animate);
   }
 
+  // Memulai animasi
+  animate();
 
+  // Inisialisasi Typed.js untuk teks yang diketik
+  new Typed('#typed', { 
+    strings: [
+      '✨ Selamat Datang di Tahun Baru 2025 Cinta kuuu ! 🎉',
+      '🌟  From Nufall For Juliaa! 🌈',
+      '🚀 Julia Harus Tambah rajin dan semangat ya!',
+      '🔥 Tetap Percaya Diri, jangan Fomo lagi, dan Mager nya di kurangin ya! 💪',
+      '📖 Jadikan Tahun ini lebih Baik dari Sebelumnya!'
+    ],
+    typeSpeed: 50,
+    backSpeed: 30,
+    backDelay: 1500,
+    loop: true
+  });
+</script>
 
-  // Memanggil animate secara berulang
-
-  requestAnimationFrame(animate);
-
-}
-
-
-
-// Memulai animasi
-
-animate();
-
-
-
-// Inisialisasi Typed.js untuk teks yang diketik
-
-new Typed('#typed', { 
-
-  strings: [
-
-    '✨ Selamat Datang di Tahun Baru 2025 Cinta kuuu ! 🎉',
-
-    '🌟  From Nufall For Juliaa! 🌈',
-
-    '🚀 Julia Harus Tambah rajin dan semangat ya!',
-
-    '🔥 Tetap Percaya Diri, jangan Fomo lagi, dan Mager nya di kurangin ya! 💪',
-
-    '📖 Jadikan Tahun ini lebih Baik dari Sebelumnya!'
-
-  ],
-
-  typeSpeed: 50,
-
-  backSpeed: 30,
-
-  backDelay: 1500,
-
-  loop: true
-
-});
-
-
-
-  </script>
 
 </body>
 
