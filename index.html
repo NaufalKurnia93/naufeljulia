@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tahun Baru 2025</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+  <style>
+
+    body {
+
+      max-width: 100vw;
+
+      margin: 0;
+
+      overflow: hidden;
+
+      background: linear-gradient(135deg, #1e3a8a, #4f46e5);
+
+      font-family: Arial, sans-serif;
+
+    }
+
+
+
+    canvas {
+
+      position: fixed;
+
+      top: 0;
+
+      left: 0;
+
+      z-index: 0;
+
+    }
+
+
+
+    .content {
+
+      position: center;
+
+      z-index: 1;
+
+      text-align: center;
+
+      color: white;
+
+      padding: 1rem;
+
+      margin-top: -10rem;
+
+    }
+
+
+
+    .glow {
+
+      text-shadow: 0 0 10px #4f46e5, 0 0 15px #4f46e5, 0 0 20px #4f46e5;
+
+      animation: glow 1.5s ease-in-out infinite alternate;
+
+      font-size: 3rem;
+
+    }
+
+
+
+    @keyframes glow {
+
+      from {
+
+        text-shadow: 0 0 10px #4f46e5, 0 0 15px #4f46e5, 0 0 20px #4f46e5;
+
+      }
+
+      to {
+
+        text-shadow: 0 0 15px #818cf8, 0 0 20px #818cf8, 0 0 30px #818cf8;
+
+      }
+
+    }
+
+.flip {
+
+  position: relative;
+
+  display: inline-block;
+
+  perspective: 800px;
+
+}
+
+
+
+.flip-content {
+
+  display: inline-block;
+
+  transform-origin: 50% 50%;
+
+  animation: flip 1.8s ease-out infinite; /* Animasi berjalan terus */
+
+  animation-duration: 4.8s; /* Total waktu animasi termasuk delay */
+
+}
+
+
+
+@keyframes flip {
+
+  0% {
+
+    transform: rotateX(0deg);
+
+  }
+
+  50% {
+
+    transform: rotateX(180deg);
+
+  }
+
+  100% {
+
+    transform: rotateX(360deg);
+
+  }
+
+}
+
+
+
+
+
+#yearContainer {
+
+  display: inline-block;
+
+  margin-top: 1rem;
+
+}
+
+
+
+#typed {
+
+  font-size: 1.5rem; /* Ukuran font disesuaikan */
+
+  font-weight: 500; /* Ketebalan font */
+
+  text-align: center; /* Teks berada di tengah */
+
+  line-height: 1.5; /* Jarak antar baris */
+
+  color: white; /* Warna teks */
+
+}
+
+
+
+.number { 
+
+  display: inline-block;
+
+  width: 1em;
+
+  text-align: center;
+
+  font-size: 9rem; /* Tingkatkan nilai font-size */
+
+  font-weight: bold;
+
+}
+
+
+
+.animated-text {
+
+  position: relative;
+
+  margin-top: 4rem; /* Sedikit kebawah */
+
+  font-size: 1rem; /* Ukuran teks */
+
+  color: #d1d5db; /* Warna abu-abu terang */
+
+  text-align: center;
+
+  line-height: 1.8;
+
+  max-width: 50rem;
+
+  margin-left: auto;
+
+  margin-right: auto;
+
+
+
+  /* Shadow text yang keren */
+
+  text-shadow: 
+
+    0 0 10px rgba(79, 70, 229, 0.8), 
+
+    0 0 20px rgba(79, 70, 229, 0.6), 
+
+    0 0 30px rgba(79, 70, 229, 0.4);
+
+
+
+  /* Animasi */
+
+  animation: fadeMove 5s ease-in-out infinite;
+
+}
+
+
+
+/* Keyframes untuk animasi */
+
+@keyframes fadeMove {
+
+  0%, 100% {
+
+    transform: translateY(0); /* Posisi awal */
+
+    opacity: 1; /* Opasitas penuh */
+
+  }
+
+  50% {
+
+    transform: translateY(10px); /* Bergerak sedikit ke bawah */
+
+    opacity: 0.8; /* Sedikit transparan */
+
+  }
+
+}
+
+
+
+.social-buttons {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 20px;
+
+  margin-top: 2rem;
+
+}
+
+
+
+.social-btn {
+
+  padding: 10px 15px;
+
+  border-radius: 30px;
+
+  font-size: 1rem;
+
+  font-weight: bold;
+
+  text-transform: uppercase;
+
+  text-decoration: none;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  color: white;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+
+
+.social-btn:hover {
+
+  transform: scale(1.1);
+
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+
+}
+
+
+
+.tiktok {
+
+  background: linear-gradient(45deg, #69c9d0, #fe2c55);
+
+  border: 2px solid #fe2c55;
+
+}
+
+
+
+.instagram {
+
+  background: linear-gradient(45deg, #f58529, #dd2a7b);
+
+  border: 2px solid #dd2a7b;
+
+}
+
+
+
+.github {
+
+  background: linear-gradient(45deg, #333, #6e5494);
+
+  border: 2px solid #6e5494;
+
+}
+
+
+
+.social-btn i {
+
+  margin-right: 8px;
+
+}
+
+
+
+
+
+
+
+    .footer {
+     
+
+      position: absolute;
+
+      bottom: 10px;
+
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      color: rgba(255, 255, 255, 0.8);
+
+      font-size: 0.8rem;
+
+      text-align: center;
+
+    }
+
+
+
+    @media (max-width: 768px) {
+
+      .glow {
+
+        font-size: 2rem;
+
+      }
+
+
+
+      .number {
+
+        font-size: 4rem;
+
+      }
+
+
+
+      .footer {
+        font-size: 0.7rem;
+
+      }
+
+      #typed {
+
+        font-size: 1rem;
+
+      }
+
+    }
+
+</style>
+
+
+
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center">
+
+  <canvas id="kembangApi"></canvas>
+
+
+
+  <div class="content">
+
+    <div class="mb-8">
+
+      <div id="yearContainer" class="text-8xl font-bold glow">
+
+        <span class="number">2</span>
+
+        <span class="number">0</span>
+
+        <span class="number">2</span>
+
+        <span class="number">5</span>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="text-3xl font-semibold mb-8">
+
+      <span id="typed"></span>
+
+    </div>
+
+
+
+<p id="motivasi-text" class="animated-text">
+
+  “Selamat Tahun Baru 2025 untuk Juliaaa 🎉. makasih ya buat cewe aku ni udah buat aku senang, udah selalu berusaha jadi yang terbaik, aku gatau gimana capek nya jadi mu yang selalu di buat marah oleh ku , sesabar itu buat merespon aku yang banyak kurangnya, aku juga berharap tahun berikutnya kita masih sama sama ya...
+
+</p>
+
+<br>
+
+<div class="social-buttons">
+
+  
+
+  <a href="https://naufalkurnia93.github.io/bungacinta/" target="_blank" class="social-btn instagram">Untuk Julia</a>
+
+  
+
+</div>
+
+  </div>
+
+  <div class="footer">
+
+    © 2025 Naufal Rambah, Untuk Orang Favorite nomor 1,2,3,4 5.
+
+  </div>
+
+
+
+
+  <script>
+
+    const sound = new Howl({
+
+  src: ['suara-kembang-api.mp3'],
+
+  volume: 0.5
+
+});
+
+
+
+document.body.addEventListener('click', () => {
+
+  if (Howler.ctx.state === 'suspended') {
+
+    Howler.ctx.resume();
+
+  }
+
+}, { once: true });
+
+
+
+function flipNumber(element, newNumber) {
+
+  element.innerHTML = `<span class="flip-content">${newNumber}</span>`;
+
+}
+
+
+
+function updateYear() {
+
+  const numbers = document.querySelectorAll('.number');
+
+
+
+  setTimeout(() => flipNumber(numbers[3], '5'), 0);
+
+
+
+  setTimeout(() => {
+
+    const yearContainer = document.getElementById('yearContainer');
+
+    yearContainer.classList.add('glow');
+
+  }, 600);
+
+}
+
+
+
+setTimeout(updateYear, 3000);
+
+
+
+const canvas = document.getElementById('kembangApi');
+
+const ctx = canvas.getContext('2d');
+
+
+
+canvas.width = window.innerWidth;
+
+canvas.height = window.innerHeight;
+
+
+
+window.addEventListener('resize', () => {
+
+  canvas.width = window.innerWidth;
+
+  canvas.height = window.innerHeight;
+
+});
+
+
+
+class Firework {
+
+  constructor() {
+
+    this.x = Math.random() * canvas.width;
+
+    this.y = canvas.height;
+
+    this.sx = Math.random() * 3 - 1.5;
+
+    this.sy = Math.random() * -12 - 8;
+
+    this.size = 3;
+
+    this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+    this.particles = [];
+
+    this.timer = 0;
+
+    this.explosion = false;
+
+  }
+
+
+
+  update() {
+
+    if (!this.explosion) {
+
+      this.x += this.sx;
+
+      this.y += this.sy;
+
+      this.sy += 0.2;
+
+
+
+      if (this.sy >= -3) {
+
+        this.explode();
+
+      }
+
+    }
+
+
+
+    if (this.explosion) {
+
+      for (let i = 0; i < this.particles.length; i++) {
+
+        this.particles[i].x += this.particles[i].sx;
+
+        this.particles[i].y += this.particles[i].sy;
+
+        this.particles[i].sy += 0.1;
+
+        this.particles[i].alpha -= 0.02;
+
+      }
+
+      this.particles = this.particles.filter(p => p.alpha > 0);
+
+    }
+
+  }
+
+
+
+  explode() {
+
+    this.explosion = true;
+
+    sound.play();
+
+
+
+    for (let i = 0; i < 50; i++) {
+
+      const angle = (Math.PI * 2 / 50) * i;
+
+      const speed = Math.random() * 5 + 3;
+
+      this.particles.push({
+
+        x: this.x,
+
+        y: this.y,
+
+        sx: Math.cos(angle) * speed,
+
+        sy: Math.sin(angle) * speed,
+
+        alpha: 1,
+
+        color: this.color
+
+      });
+
+    }
+
+  }
+
+
+
+  draw() {
+
+    if (!this.explosion) {
+
+      ctx.beginPath();
+
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+      ctx.fillStyle = this.color;
+
+      ctx.fill();
+
+    }
+
+
+
+    if (this.explosion) {
+
+      for (const particle of this.particles) {
+
+        ctx.beginPath();
+
+        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+
+        ctx.fillStyle = `rgba(${hexToRgb(particle.color)}, ${particle.alpha})`;
+
+        ctx.fill();
+
+      }
+
+    }
+
+  }
+
+}
+
+
+
+function hexToRgb(hex) {
+
+  const result = /^hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)$/.exec(hex);
+
+  if (result) {
+
+    const h = result[1] / 360;
+
+    const s = result[2] / 100;
+
+    const l = result[3] / 100;
+
+
+
+    const r = l < 0.5 ? l * (1 + s) : l + s - l * s;
+
+    const g = l < 0.5 ? l * (1 + s) : l + s - l * s;
+
+    const b = l < 0.5 ? l * (1 + s) : l + s - l * s;
+
+
+
+    return `${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)}`;
+
+  }
+
+  return null;
+
+}
+
+
+
+const fireworks = [];
+
+
+
+function animate() {
+
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+
+  // Menambahkan kembang api baru secara acak
+
+  if (Math.random() < 0.05) {
+
+    fireworks.push(new Firework());
+
+  }
+
+
+
+  // Memperbarui dan menggambar setiap kembang api
+
+  for (let i = fireworks.length - 1; i >= 0; i--) {
+
+    fireworks[i].update();
+
+    fireworks[i].draw();
+
+    // Menghapus kembang api yang sudah tidak memiliki partikel lagi
+
+    if (fireworks[i].particles.length === 0 && fireworks[i].explosion) {
+
+      fireworks.splice(i, 1);
+
+    }
+
+  }
+
+
+
+  // Memanggil animate secara berulang
+
+  requestAnimationFrame(animate);
+
+}
+
+
+
+// Memulai animasi
+
+animate();
+
+
+
+// Inisialisasi Typed.js untuk teks yang diketik
+
+new Typed('#typed', { 
+
+  strings: [
+
+    '✨ Selamat Datang di Tahun Baru 2025 Cinta kuuu ! 🎉',
+
+    '🌟  From Nufall For Juliaa! 🌈',
+
+    '🚀 Julia Harus Tambah rajin dan semangat ya!',
+
+    '🔥 Tetap Percaya Diri, jangan Fomo lagi, dan Mager nya di kurangin ya! 💪',
+
+    '📖 Jadikan Tahun ini lebih Baik dari Sebelumnya!'
+
+  ],
+
+  typeSpeed: 50,
+
+  backSpeed: 30,
+
+  backDelay: 1500,
+
+  loop: true
+
+});
+
+
+
+  </script>
+
+</body>
+
+</html>
